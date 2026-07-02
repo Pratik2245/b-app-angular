@@ -1,0 +1,168 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.top-navbar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    padding: 16px 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: white;
+}
+
+.brand-mark {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: white;
+
+    box-shadow: 0 10px 25px rgba(99, 102, 241, .35);
+
+    transition: .35s;
+}
+
+.brand:hover .brand-mark {
+    transform: rotate(-10deg) scale(1.08);
+}
+
+.brand-text {
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #fff;
+}
+
+/* Nav Links */
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #d1d5db;
+    font-weight: 500;
+    position: relative;
+    transition: .3s;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+
+    width: 0;
+    height: 2px;
+
+    background: #8b5cf6;
+
+    transition: .3s;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Register Button */
+
+.nav-btn {
+
+    text-decoration: none;
+
+    color: #fff;
+
+    padding: 11px 24px;
+
+    border-radius: 30px;
+
+    font-weight: 600;
+
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+
+    box-shadow: 0 10px 30px rgba(99, 102, 241, .35);
+
+    transition: .35s;
+}
+
+.nav-btn:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 18px 35px rgba(99, 102, 241, .45);
+
+}
+
+/* Responsive */
+
+@media(max-width:768px) {
+
+    .nav-inner {
+
+        flex-direction: column;
+        gap: 18px;
+
+    }
+
+    .nav-actions {
+
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+
+    }
+
+}
