@@ -1,1 +1,41 @@
-<p>blog-list works!</p>
+<div class="blog-list-container">
+    <div class="list-header">
+        <h1>All Blog Posts</h1>
+        <p>Discover stories from our community</p>
+    </div>
+
+    @if (blogs.length > 0) {
+    <div class="blog-grid">
+        @for(blog of blogs; track blog._id) {
+        <article class="blog-card">
+            @if (blog.coverImage) {
+            <div class="blog-image">
+                <img [src]="'http://localhost:3001' + blog.coverImage" [alt]="blog.title" />
+            </div>
+            }
+            <div class="blog-content">
+                <h2 class="blog-title">{{ blog.title }}</h2>
+                <div class="blog-meta">
+                    <span class="author">
+                        <strong>{{ blog.author?.username || 'Anonymous' }}</strong>
+                    </span>
+                    <span class="views">{{ blog.views || 0 }} views</span>
+                </div>
+                <p class="blog-excerpt">{{ blog.content?.substring(0, 120) }}...</p>
+                <div class="blog-footer">
+                    <span class="likes">❤️ {{ blog.likeCount || 0 }}</span>
+                    <a [routerLink]="['/blog', blog._id]" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </article>
+        }
+    </div>
+    } @else {
+    <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h2>No blogs yet</h2>
+        <p>Be the first to share your story</p>
+        <a routerLink="/blog/create" class="btn-create">Create First Blog</a>
+    </div>
+    }
+</div>
