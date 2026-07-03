@@ -1,1 +1,66 @@
-<p>home works!</p>
+<div class="home-container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to BlogSphere</h1>
+            <p class="hero-subtitle">Discover stories, share ideas, and connect with readers worldwide</p>
+
+            @if (user) {
+            <div class="hero-cta">
+                <a routerLink="/create-blog" class="btn-primary">Create New Blog</a>
+                <a routerLink="/blogs" class="btn-secondary">Browse All Blogs</a>
+            </div>
+            } @else {
+            <div class="hero-cta">
+                <a routerLink="/register" class="btn-primary">Start Writing</a>
+                <a routerLink="/blog" class="btn-secondary">Read Stories</a>
+            </div>
+            }
+        </div>
+        <div class="hero-visual"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why BlogSphere?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✍️</div>
+                <h3>Easy Publishing</h3>
+                <p>Share your thoughts with a simple, intuitive editor. No technical skills required.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Community</h3>
+                <p>Connect with readers and writers who share your passions and interests.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Grow Your Voice</h3>
+                <p>Build your personal brand and reach an engaged audience of thoughtful readers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Instant Impact</h3>
+                <p>Your stories go live instantly. Engage readers in real-time and get feedback.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        @if (!user) {
+        <div class="cta-content">
+            <h2>Ready to share your story?</h2>
+            <p>Join thousands of writers on BlogSphere and start your publishing journey today.</p>
+            <a routerLink="/register" class="btn-large">Get Started Free</a>
+        </div>
+        } @else {
+        <div class="cta-content">
+            <h2>What's on your mind?</h2>
+            <p>Create a new post and share your latest thoughts with our community.</p>
+            <a routerLink="/blog/create" class="btn-large">Write Now</a>
+        </div>
+        }
+    </section>
+</div>

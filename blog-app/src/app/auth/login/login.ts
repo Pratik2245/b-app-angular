@@ -24,12 +24,6 @@ export class Login {
       .subscribe({
 
         next: (res: any) => {
-
-          localStorage.setItem(
-            'token',
-            res.token
-          );
-
           alert(
             'Login Successful'
           );

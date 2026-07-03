@@ -1,1 +1,86 @@
-<p>blog-detail works!</p>
+<div class="blog-detail-container">
+    @if (loading) {
+    <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading blog post...</p>
+    </div>
+    } @else if (error || !blog) {
+    <div class="error-state">
+        <div class="error-icon">😞</div>
+        <h2>Blog not found</h2>
+        <p>The blog post you're looking for doesn't exist or has been removed.</p>
+        <a routerLink="/blog" class="btn-back">Back to Blogs</a>
+    </div>
+    } @else {
+    <article class="blog-article">
+        <!-- Header Section -->
+        <header class="blog-header">
+            <a routerLink="/blogs" class="back-link">← Back to Blogs</a>
+            <h1 class="blog-title">{{ blog.title }}</h1>
+            <div class="blog-meta">
+                <div class="author-info">
+                    <span class="author-name">{{ blog.author?.username || 'Anonymous' }}</span>
+                    <span class="separator">•</span>
+                    <span class="publish-date">{{ blog.createdAt | date: 'MMM d, yyyy' }}</span>
+                    <span class="separator">•</span>
+                    <span class="read-time">{{ estimateReadTime(blog.content) }} min read</span>
+                </div>
+                <div class="stats">
+                    <span class="views">👁️ {{ blog.views || 0 }} views</span>
+                    <span class="likes">❤️ {{ blog.likeCount || 0 }} likes</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cover Image -->
+        @if (blog.coverImage) {
+        <div class="blog-cover">
+            <img [src]="'http://localhost:3001' + blog.coverImage" [alt]="blog.title" />
+        </div>
+        }
+
+        <!-- Content Section -->
+        <div class="blog-body">
+            <div class="content-text" [innerHTML]="blog.content"></div>
+        </div>
+
+        <!-- Author Card -->
+        <div class="author-card">
+            <div class="author-header">
+                <h3>About the Author</h3>
+            </div>
+            <div class="author-details">
+                <div class="author-avatar">{{ (blog.author?.username || 'A').charAt(0).toUpperCase() }}</div>
+                <div class="author-info-detail">
+                    <h4>{{ blog.author?.username || 'Anonymous' }}</h4>
+                    @if (blog.author?.email) {
+                    <p class="author-email">{{ blog.author.email }}</p>
+                    }
+                    <p class="author-desc">Published on {{ blog.createdAt | date: 'MMMM d, yyyy' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Stats -->
+        <div class="blog-stats">
+            <div class="stat-item">
+                <span class="stat-label">Views</span>
+                <span class="stat-value">{{ blog.views || 0 }}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Likes</span>
+                <span class="stat-value">{{ blog.likeCount || 0 }}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Read Time</span>
+                <span class="stat-value">{{ estimateReadTime(blog.content) }} min</span>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="blog-footer">
+            <a routerLink="/blog" class="btn-back-footer">← Back to all posts</a>
+        </footer>
+    </article>
+    }
+</div>

@@ -1,15 +1,67 @@
 <nav class="top-navbar">
   <div class="container nav-inner">
+
+    <!-- Logo -->
     <a class="brand" routerLink="/">
       <span class="brand-mark">B</span>
       <span class="brand-text">BlogSphere</span>
     </a>
 
-    <div class="nav-actions">
-      <a routerLink="/" class="nav-link">Home</a>
-      <a routerLink="/login" class="nav-link">Login</a>
-      <a routerLink="/register" class="nav-btn">Register</a>
+    <!-- Center Navigation -->
+    @if (authService.currentUser()) {
+    <div class="nav-center">
+      <a routerLink="/" routerLinkActive="active-link">
+        Home
+      </a>
+
+      <a routerLink="/blogs" routerLinkActive="active-link">
+        Blogs
+      </a>
+
+      <a routerLink="/create-blog" routerLinkActive="active-link">
+        ✍️ Create Blog
+      </a>
     </div>
+    }
+
+    <!-- Right Side -->
+    <div class="nav-actions">
+
+      @if (authService.currentUser()) {
+
+      <div class="user-info">
+
+        <div class="user-avatar">
+          {{ authService.currentUser().username.charAt(0).toUpperCase() }}
+        </div>
+
+        <div class="user-details">
+          <span class="welcome-text">Welcome back 👋</span>
+          <span class="username">
+            {{ authService.currentUser().username }}
+          </span>
+        </div>
+
+        <button class="logout-btn" (click)="logout()">
+          Logout
+        </button>
+
+      </div>
+
+      } @else {
+
+      <a routerLink="/login" class="nav-link">
+        Login
+      </a>
+
+      <a routerLink="/register" class="nav-btn">
+        Register
+      </a>
+
+      }
+
+    </div>
+
   </div>
 </nav>
 
