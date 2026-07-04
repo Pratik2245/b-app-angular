@@ -224,3 +224,28 @@ exports.toggleLike = async (req, res) => {
         });
     }
 }
+
+exports.getMyBlogs = async (req, res) => {
+    try {
+
+        const blogs = await Blog.find({
+            author: req.user.id
+        })
+            .populate("author", "username email profileImage")
+            .sort({ createdAt: -1 });
+
+        const response = blogs.map(blog => ({
+            ...blog.toObject(),
+            likeCount: blog.likes.length
+        }));
+
+        res.status(200).json(response);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};

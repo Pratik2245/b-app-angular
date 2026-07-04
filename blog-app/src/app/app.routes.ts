@@ -7,6 +7,8 @@ import { BlogList } from './blog/blog-list/blog-list';
 import { CreateBlog } from './blog/create-blog/create-blog';
 import { authGuard } from './guards/auth-guard';
 import { BlogDetail } from './blog/blog-detail/blog-detail';
+import { MyBlogs } from './blog/my-blogs/my-blogs';
+import { EditBlog } from './blog/edit-blog/edit-blog';
 
 export const routes: Routes = [
 
@@ -37,6 +39,15 @@ export const routes: Routes = [
     }, {
         path: 'blog/:id',
         component: BlogDetail,
+        canActivate: [authGuard]
+    }
+    , {
+        path: 'my-blogs',
+        component: MyBlogs,
+        canActivate: [authGuard]
+    }, {
+        path: 'edit-blog/:id',
+        component: EditBlog,
         canActivate: [authGuard]
     }
 

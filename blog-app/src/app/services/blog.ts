@@ -52,4 +52,9 @@ export class Blog {
     );
 
   }
+  getMyBlogs() {
+    return this.http.get(
+      `${environment.apiUrl}/blogs/myblogs`
+    );
+  }
 }

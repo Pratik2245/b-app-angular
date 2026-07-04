@@ -1,0 +1,24 @@
+<section class="edit-blog">
+    <div class="container py-4">
+        <h2>Edit Blog</h2>
+
+        @if (isLoading) {
+        <p>Loading blog...</p>
+        } @else {
+        <form (ngSubmit)="updateBlog()">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" [(ngModel)]="title" name="title" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Content</label>
+                <textarea class="form-control" rows="8" [(ngModel)]="content" name="content" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Blog</button>
+            <a routerLink="/my-blogs" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+        }
+    </div>
+</section>

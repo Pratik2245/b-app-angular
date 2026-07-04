@@ -15,7 +15,8 @@ const {
     getBlogById,
     updateBlog,
     deleteBlog,
-    toggleLike
+    toggleLike,
+    getMyBlogs
 } = require(
     "../controllers/blogController"
 );
@@ -29,6 +30,12 @@ router.post(
 router.get(
     "/",
     getBlogs
+);
+
+router.get(
+    "/myblogs",
+    authMiddleware,
+    getMyBlogs
 );
 
 router.get(
