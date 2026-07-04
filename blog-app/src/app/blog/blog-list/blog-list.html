@@ -23,7 +23,16 @@
                 </div>
                 <p class="blog-excerpt">{{ blog.content?.substring(0, 120) }}...</p>
                 <div class="blog-footer">
-                    <span class="likes">❤️ {{ blog.likeCount || 0 }}</span>
+                    <button class="btn btn-sm" [class.btn-danger]="blog.liked" [class.btn-outline-danger]="!blog.liked"
+                        (click)="toggleLike(blog)">
+
+                        {{ blog.liked ? '❤️ Liked' : '🤍 Like' }}
+
+                    </button>
+
+                    <span class="ms-2">
+                        {{ blog.likeCount }}
+                    </span>
                     <a [routerLink]="['/blog', blog._id]" class="read-more">Read More →</a>
                 </div>
             </div>

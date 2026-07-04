@@ -76,6 +76,49 @@
                 <span class="stat-value">{{ estimateReadTime(blog.content) }} min</span>
             </div>
         </div>
+        <hr>
+
+        <section class="comments-section">
+            <div class="comments-header">
+                <div>
+                    <h2>Comments</h2>
+                    <p>Share your thoughts and join the conversation.</p>
+                </div>
+                <span class="comments-count">{{ comments.length }} {{ comments.length === 1 ? 'comment' : 'comments'
+                    }}</span>
+            </div>
+
+            <div class="comment-form-card">
+                <textarea rows="4" class="form-control" placeholder="Write a comment..."
+                    [(ngModel)]="commentText"></textarea>
+                <div class="comment-form-actions">
+                    <button class="btn btn-primary" (click)="addComment()">Post Comment</button>
+                </div>
+            </div>
+
+            @if(comments.length){
+            @for(comment of comments; track comment._id){
+            <article class="comment-card">
+                <div class="comment-card-header">
+                    <div class="comment-author">
+                        <div class="comment-avatar">{{ (comment.user?.username || 'U').charAt(0).toUpperCase() }}</div>
+                        <div>
+                            <h6>{{ comment.user?.username || 'User' }}</h6>
+                            <small>{{ comment.createdAt | date:'medium' }}</small>
+                        </div>
+                    </div>
+                    <button class="comment-delete-btn" (click)="deleteComment(comment._id)">Delete</button>
+                </div>
+                <p class="comment-text">{{ comment.text }}</p>
+            </article>
+            }
+            } @else {
+            <div class="empty-comments">
+                <div class="empty-comments-icon">💬</div>
+                <p>No comments yet. Be the first to start the discussion.</p>
+            </div>
+            }
+        </section>
 
         <!-- Footer Section -->
         <footer class="blog-footer">

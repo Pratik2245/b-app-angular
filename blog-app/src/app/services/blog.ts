@@ -57,4 +57,10 @@ export class Blog {
       `${environment.apiUrl}/blogs/myblogs`
     );
   }
+  likeBlog(id: string) {
+    return this.http.post(
+      `${environment.apiUrl}/blogs/${id}/like`,
+      {}
+    );
+  }
 }

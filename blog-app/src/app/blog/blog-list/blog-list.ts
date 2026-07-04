@@ -43,5 +43,28 @@ export class BlogList implements OnInit {
 
     });
   }
+  toggleLike(blog: any): void {
+
+    this.blogService.likeBlog(blog._id).subscribe({
+
+      next: (res: any) => {
+
+        blog.likeCount = res.likeCount;
+        blog.liked = res.liked;
+
+        this.cdr.detectChanges();
+
+      },
+
+      error: (err) => {
+
+        console.error(err);
+
+      }
+
+    });
+
+  }
+
 }
 

@@ -7,6 +7,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Blog } from '../../services/blog';
+import { Comment } from '../../services/comment';
 
 @Component({
   selector: 'app-my-blogs',
@@ -18,10 +19,12 @@ import { Blog } from '../../services/blog';
 export class MyBlogs implements OnInit {
 
   private blogService = inject(Blog);
+  private commentService = inject(Comment);
   private cdr = inject(ChangeDetectorRef);
 
   blogs: any[] = [];
   isLoading = false;
+  expandedBlogId: string | null = null;
 
   ngOnInit(): void {
     this.loadBlogs();
@@ -79,6 +82,39 @@ export class MyBlogs implements OnInit {
 
     });
 
+  }
+
+  toggleComments(blogId: string): void {
+    if (this.expandedBlogId === blogId) {
+      this.expandedBlogId = null;
+      return;
+    }
+
+    this.expandedBlogId = blogId;
+    const blog = this.blogs.find(item => item._id === blogId);
+    if (blog && !blog.commentsLoaded) {
+      this.commentService.getComments(blogId).subscribe({
+        next: (comments: any) => {
+          blog.comments = comments;
+          blog.commentsLoaded = true;
+          this.cdr.detectChanges();
+        }
+      });
+    }
+  }
+
+  deleteComment(blogId: string, commentId: string): void {
+    if (!confirm('Delete this comment?')) return;
+
+    this.commentService.deleteComment(commentId).subscribe({
+      next: () => {
+        const blog = this.blogs.find(item => item._id === blogId);
+        if (blog) {
+          blog.comments = (blog.comments || []).filter((comment: any) => comment._id !== commentId);
+          this.cdr.detectChanges();
+        }
+      }
+    });
   }
 
 }
