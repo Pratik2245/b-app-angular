@@ -1,0 +1,131 @@
+.profile-card {
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+.profile-header {
+
+    position: relative;
+
+    height: 180px;
+
+}
+
+.profile-cover {
+
+    height: 120px;
+
+    background: linear-gradient(135deg,
+            #4f46e5,
+            #7c3aed);
+
+}
+
+.profile-image-wrapper {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -50px;
+
+    transform: translateX(-50%);
+
+}
+
+.profile-image {
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 5px solid white;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+
+}
+
+.profile-avatar {
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    background: #4f46e5;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 48px;
+
+    font-weight: bold;
+
+    border: 5px solid white;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+
+}
+
+.card-body {
+
+    margin-top: 70px;
+
+}
+
+.custom-input {
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+
+    transition: .3s;
+
+}
+
+.custom-input:focus {
+
+    border-color: #4f46e5;
+
+    box-shadow: 0 0 0 .2rem rgba(79, 70, 229, .15);
+
+}
+
+textarea {
+
+    resize: none;
+
+}
+
+.save-btn {
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.save-btn:hover {
+
+    transform: translateY(-2px);
+
+}

@@ -1,1 +1,124 @@
-<p>profile works!</p>
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-lg profile-card">
+
+                <!-- Header -->
+                <div class="profile-header">
+
+                    <div class="profile-cover"></div>
+
+                    <div class="profile-image-wrapper">
+
+                        @if(user.profileImage){
+
+                        <img [src]="'http://localhost:3001' + user.profileImage" class="profile-image">
+
+                        } @else {
+
+                        <div class="profile-avatar">
+
+                            {{ username.charAt(0).toUpperCase() }}
+
+                        </div>
+
+                        }
+
+                    </div>
+
+                </div>
+
+                <!-- Body -->
+
+                <div class="card-body px-5 pb-5">
+
+                    <div class="text-center mb-5">
+
+                        <h2 class="fw-bold mb-1">
+
+                            {{ username }}
+
+                        </h2>
+
+                        <p class="text-muted">
+
+                            {{ email }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Username
+
+                            </label>
+
+                            <input type="text" class="form-control custom-input" [(ngModel)]="username">
+
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Email
+
+                            </label>
+
+                            <input type="email" class="form-control custom-input" [value]="email" readonly>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Bio
+
+                        </label>
+
+                        <textarea rows="5" class="form-control custom-input"
+                            placeholder="Tell everyone something about yourself..." [(ngModel)]="bio">
+
+                        </textarea>
+
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Profile Image</label>
+                        <input type="file" class="form-control custom-input" accept="image/*"
+                            (change)="onFileSelected($event)">
+                        <button class="btn btn-outline-primary mt-3" (click)="uploadImage()">
+                            📷 Upload Image
+                        </button>
+                    </div>
+
+                    <div class="d-grid">
+
+                        <button class="btn btn-primary btn-lg save-btn" (click)="updateProfile()">
+
+                            💾 Save Profile
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
