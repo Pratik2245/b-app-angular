@@ -20,7 +20,7 @@
 
                 <div class="card-body p-5">
 
-                    <form (ngSubmit)="createBlog()">
+                    <form #blogForm="ngForm" (ngSubmit)="createBlog()" novalidate>
 
                         <!-- Blog Title -->
                         <div class="mb-4">
@@ -30,7 +30,11 @@
                             </label>
 
                             <input type="text" class="form-control form-control-lg" name="title" [(ngModel)]="title"
-                                placeholder="Enter your blog title" required>
+                                #titleInput="ngModel" placeholder="Enter your blog title" required minlength="5"
+                                maxlength="100">
+                            @if (titleInput.invalid && (titleInput.touched || blogForm.submitted)) {
+                            <div class="text-danger small mt-1">Title must be at least 5 characters.</div>
+                            }
 
                         </div>
 
@@ -42,8 +46,12 @@
                             </label>
 
                             <textarea class="form-control" rows="12" name="content" [(ngModel)]="content"
-                                placeholder="Write your blog content here..." required>
+                                #contentInput="ngModel" placeholder="Write your blog content here..." required
+                                minlength="20">
                             </textarea>
+                            @if (contentInput.invalid && (contentInput.touched || blogForm.submitted)) {
+                            <div class="text-danger small mt-1">Content must be at least 20 characters.</div>
+                            }
 
                         </div>
 

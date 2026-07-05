@@ -5,15 +5,23 @@
         @if (isLoading) {
         <p>Loading blog...</p>
         } @else {
-        <form (ngSubmit)="updateBlog()">
+        <form #blogForm="ngForm" (ngSubmit)="updateBlog()" novalidate>
             <div class="mb-3">
                 <label class="form-label">Title</label>
-                <input type="text" class="form-control" [(ngModel)]="title" name="title" required />
+                <input type="text" class="form-control" [(ngModel)]="title" name="title" #titleInput="ngModel" required
+                    minlength="5" maxlength="100" />
+                @if (titleInput.invalid && (titleInput.touched || blogForm.submitted)) {
+                <div class="text-danger small mt-1">Title must be at least 5 characters.</div>
+                }
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Content</label>
-                <textarea class="form-control" rows="8" [(ngModel)]="content" name="content" required></textarea>
+                <textarea class="form-control" rows="8" [(ngModel)]="content" name="content" #contentInput="ngModel"
+                    required minlength="20"></textarea>
+                @if (contentInput.invalid && (contentInput.touched || blogForm.submitted)) {
+                <div class="text-danger small mt-1">Content must be at least 20 characters.</div>
+                }
             </div>
 
             <button type="submit" class="btn btn-primary">Update Blog</button>

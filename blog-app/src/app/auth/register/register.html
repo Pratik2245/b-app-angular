@@ -9,38 +9,29 @@
             <li>Manage everything from one place</li>
         </ul>
     </div>
-
     <div class="auth-panel auth-form-panel">
         <div class="form-header">
             <h1>Create account</h1>
             <p>Register to start publishing and connecting.</p>
         </div>
-
-        <form class="auth-form" (ngSubmit)="register()">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" type="text" class="custom-input" name="username" [(ngModel)]="username"
-                    placeholder="Enter username" />
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input id="email" type="email" class="custom-input" name="email" [(ngModel)]="email"
-                    placeholder="Enter email" />
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" type="password" name="password" [(ngModel)]="password" class="custom-input"
-                    placeholder="Create password" />
-            </div>
-
-            <button class="register-btn" type="submit">Create Account</button>
+        <form #registerForm="ngForm" class="auth-form" (ngSubmit)="register()" novalidate>
+            <div class="form-group"> <label for="username">Username</label> <input id="username" type="text"
+                    class="custom-input" name="username" [(ngModel)]="username" #usernameInput="ngModel"
+                    placeholder="Enter username" required minlength="3" /> @if (usernameInput.invalid &&
+                (usernameInput.touched || registerForm.submitted)) { <div class="text-danger small mt-1">Username must
+                    be at least 3 characters.</div> } </div>
+            <div class="form-group"> <label for="email">Email Address</label> <input id="email" type="email"
+                    class="custom-input" name="email" [(ngModel)]="email" #emailInput="ngModel"
+                    placeholder="Enter email" required email /> @if (emailInput.invalid && (emailInput.touched ||
+                registerForm.submitted)) { <div class="text-danger small mt-1">Please enter a valid email address.</div>
+                } @if (registrationError) { <div class="text-danger small mt-1">{{ registrationError }}</div> } </div>
+            <div class="form-group"> <label for="password">Password</label> <input id="password" type="password"
+                    name="password" [(ngModel)]="password" #passwordInput="ngModel" class="custom-input"
+                    placeholder="Create password" required minlength="6" /> @if (passwordInput.invalid &&
+                (passwordInput.touched || registerForm.submitted)) { <div class="text-danger small mt-1">Password must
+                    be at least 6 characters.</div> } </div> <button class="register-btn" type="submit">Create
+                Account</button>
         </form>
-
-        <p class="switch-text">
-            Already have an account?
-            <a routerLink="/login">Login</a>
-        </p>
+        <p class="switch-text"> Already have an account? <a routerLink="/login">Login</a> </p>
     </div>
 </div>

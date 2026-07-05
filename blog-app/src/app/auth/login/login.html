@@ -16,18 +16,28 @@
             <p>Access your account to continue creating.</p>
         </div>
 
-        <form (ngSubmit)="login()" class="auth-form">
+        <form #loginForm="ngForm" (ngSubmit)="login()" class="auth-form" novalidate>
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input id="email" type="email" name="email" [(ngModel)]="email" class="custom-input"
-                    placeholder="Enter your email" />
+                <input id="email" type="email" name="email" [(ngModel)]="email" #emailInput="ngModel"
+                    class="custom-input" placeholder="Enter your email" required email />
+                @if (emailInput.invalid && (emailInput.touched || loginForm.submitted)) {
+                <div class="text-danger small mt-1">Please enter a valid email address.</div>
+                }
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input id="password" name="password" [(ngModel)]="password" type="password" class="custom-input"
-                    placeholder="Enter your password" />
+                <input id="password" name="password" [(ngModel)]="password" #passwordInput="ngModel" type="password"
+                    class="custom-input" placeholder="Enter your password" required minlength="6" />
+                @if (passwordInput.invalid && (passwordInput.touched || loginForm.submitted)) {
+                <div class="text-danger small mt-1">Password must be at least 6 characters.</div>
+                }
             </div>
+
+            @if (loginError) {
+            <div class="text-danger small mt-2">{{ loginError }}</div>
+            }
 
             <button class="login-btn" type="submit">Sign In</button>
         </form>

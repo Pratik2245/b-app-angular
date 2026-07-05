@@ -51,48 +51,68 @@
 
                     </div>
 
-                    <div class="row">
+                    <form #profileForm="ngForm" (ngSubmit)="updateProfile()" novalidate>
+                        <div class="row">
 
-                        <div class="col-md-6 mb-4">
+                            <div class="col-md-6 mb-4">
 
-                            <label class="form-label fw-semibold">
+                                <label class="form-label fw-semibold">
 
-                                Username
+                                    Username
 
-                            </label>
+                                </label>
 
-                            <input type="text" class="form-control custom-input" [(ngModel)]="username">
+                                <input type="text" class="form-control custom-input" [(ngModel)]="username"
+                                    name="username" #usernameInput="ngModel" required minlength="3">
+                                @if (usernameInput.invalid && (usernameInput.touched || profileForm.submitted)) {
+                                <div class="text-danger small mt-1">Username must be at least 3 characters.</div>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+
+                                    Email
+
+                                </label>
+
+                                <input type="email" class="form-control custom-input" [value]="email" readonly>
+
+                            </div>
 
                         </div>
 
-                        <div class="col-md-6 mb-4">
+                        <div class="mb-4">
 
                             <label class="form-label fw-semibold">
 
-                                Email
+                                Bio
 
                             </label>
 
-                            <input type="email" class="form-control custom-input" [value]="email" readonly>
+                            <textarea rows="5" class="form-control custom-input"
+                                placeholder="Tell everyone something about yourself..." [(ngModel)]="bio" name="bio"
+                                #bioInput="ngModel" maxlength="200">
+
+                            </textarea>
+                            @if (bioInput.invalid && (bioInput.touched || profileForm.submitted)) {
+                            <div class="text-danger small mt-1">Bio cannot exceed 200 characters.</div>
+                            }
 
                         </div>
 
-                    </div>
+                        <div class="d-grid">
 
-                    <div class="mb-4">
+                            <button class="btn btn-primary btn-lg save-btn" type="submit">
 
-                        <label class="form-label fw-semibold">
+                                💾 Save Profile
 
-                            Bio
+                            </button>
 
-                        </label>
-
-                        <textarea rows="5" class="form-control custom-input"
-                            placeholder="Tell everyone something about yourself..." [(ngModel)]="bio">
-
-                        </textarea>
-
-                    </div>
+                        </div>
+                    </form>
 
                     <div class="mb-4">
                         <label class="form-label fw-semibold">Profile Image</label>
@@ -101,16 +121,6 @@
                         <button class="btn btn-outline-primary mt-3" (click)="uploadImage()">
                             📷 Upload Image
                         </button>
-                    </div>
-
-                    <div class="d-grid">
-
-                        <button class="btn btn-primary btn-lg save-btn" (click)="updateProfile()">
-
-                            💾 Save Profile
-
-                        </button>
-
                     </div>
 
                 </div>

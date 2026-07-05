@@ -2,25 +2,24 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  inject
+  ViewChild,
+  inject,
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 import { User } from '../../services/user';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
 export class Profile implements OnInit {
+  @ViewChild('profileForm') profileForm!: NgForm;
 
   private userService = inject(User);
   private cdr = inject(ChangeDetectorRef);
@@ -42,83 +41,66 @@ export class Profile implements OnInit {
   }
 
   loadProfile(): void {
-
     this.isLoading = true;
 
     this.userService.getProfile().subscribe({
-
       next: (res: any) => {
-
         this.user = res;
-
         this.username = res.username;
-
         this.email = res.email;
-
         this.bio = res.bio || '';
 
         if (res.profileImage) {
-          this.imagePreview =
-            'http://localhost:3001' + res.profileImage;
+          this.imagePreview = 'http://localhost:3001' + res.profileImage;
         }
 
         this.isLoading = false;
-
         this.cdr.detectChanges();
-
       },
-
       error: (err) => {
-
         console.error(err);
-
         this.isLoading = false;
-
         this.cdr.detectChanges();
-
-      }
-
+      },
     });
-
   }
 
   updateProfile(): void {
+    if (this.profileForm?.invalid) {
+      this.profileForm.form.markAllAsTouched();
+      return;
+    }
 
     const data = {
-
-      username: this.username,
-
-      bio: this.bio
-
+      username: this.username.trim(),
+      bio: this.bio.trim(),
     };
 
-    this.userService
-      .updateProfile(data)
-      .subscribe({
-
-        next: (res: any) => {
-
-          this.user = res;
-
-          alert("Profile Updated Successfully");
-
-          this.cdr.detectChanges();
-
-        },
-
-        error: (err) => {
-
-          console.error(err);
-
-        }
-
-      });
-
+    this.userService.updateProfile(data).subscribe({
+      next: (res: any) => {
+        this.user = res;
+        alert('Profile Updated Successfully');
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
   uploadImage(): void {
     if (!this.selectedFile) {
       alert('Please select an image first');
+      return;
+    }
+
+    if (!this.selectedFile.type.startsWith('image/')) {
+      alert('Please choose a valid image file');
+      return;
+    }
+
+    if (this.selectedFile.size > 2 * 1024 * 1024) {
+      alert('Image size should be less than 2MB');
       return;
     }
 
@@ -141,18 +123,17 @@ export class Profile implements OnInit {
           error: (err) => {
             console.error(err);
             alert('Failed to save profile image');
-          }
+          },
         });
       },
       error: (err) => {
         console.error(err);
         alert('Image upload failed');
-      }
+      },
     });
   }
 
   onFileSelected(event: Event): void {
-
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) {
@@ -164,15 +145,10 @@ export class Profile implements OnInit {
     const reader = new FileReader();
 
     reader.onload = () => {
-
       this.imagePreview = reader.result;
-
       this.cdr.detectChanges();
-
     };
 
     reader.readAsDataURL(this.selectedFile);
-
   }
-
 }
