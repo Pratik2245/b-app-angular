@@ -55,37 +55,53 @@ exports.getBlogs = async (req, res) => {
 }
 
 exports.getBlogById = async (req, res) => {
+
     try {
+
         const blog = await Blog.findById(req.params.id)
-            .populate("author",
-                "username email profileImage");
+            .populate(
+                "author",
+                "username email profileImage"
+            );
 
         if (!blog) {
             return res.status(404).json({
-                message:
-                    "Blog not found"
+                message: "Blog not found"
             });
         }
 
-        blog.views += 1;
+        const userId = req.user.id;
 
-        await blog.save();
+        const alreadyViewed = blog.viewedBy.some(
+            id => id.toString() === userId
+        );
+
+        if (!alreadyViewed) {
+
+            blog.views++;
+
+            blog.viewedBy.push(userId);
+
+            await blog.save();
+
+        }
 
         const response = {
             ...blog.toObject(),
-            likeCount:
-                blog.likes.length
+            likeCount: blog.likes.length
         };
 
-        res.status(200).json(
-            response
-        );
+        res.status(200).json(response);
+
     } catch (error) {
+
         res.status(500).json({
             message: error.message
         });
+
     }
-}
+
+};
 
 
 exports.updateBlog = async (req, res) => {

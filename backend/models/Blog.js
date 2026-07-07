@@ -23,6 +23,18 @@ const blogSchema = new mongoose.Schema({
         required: true
     },
 
+    views: {
+        type: Number,
+        default: 0
+    },
+
+    viewedBy: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,

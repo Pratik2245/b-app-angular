@@ -40,6 +40,7 @@ router.get(
 
 router.get(
     "/:id",
+    authMiddleware,
     getBlogById
 );
 

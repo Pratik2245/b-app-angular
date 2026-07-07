@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
@@ -13,7 +14,7 @@ const userRoutes =
 
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("/uploads"))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use((req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     next();

@@ -30,7 +30,7 @@ exports.getProfile =
 exports.updateProfile = async (req, res) => {
 
     try {
-        const updateUser = User.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
             req.user.id,
             req.body,
             {
