@@ -38,9 +38,7 @@ export class MyBlogs implements OnInit {
 
       next: (res: any) => {
 
-        console.log("My Blogs:", res);
-
-        this.blogs = [...res];
+        this.blogs = this.blogService.normalizeBlogs(res);
 
         this.isLoading = false;
 

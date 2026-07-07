@@ -58,7 +58,7 @@ export class BlogDetail implements OnInit {
 
       next: (res: any) => {
 
-        this.blog = res;
+        this.blog = this.blogService.normalizeBlog(res);
 
         this.loadComments();
 

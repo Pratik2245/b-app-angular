@@ -8,6 +8,19 @@ import { environment } from '../../environments/environment';
 export class Blog {
   private http = inject(HttpClient);
 
+  normalizeBlog(blog: any) {
+    return {
+      ...blog,
+      likeCount: Number(blog?.likeCount ?? blog?.likes?.length ?? 0),
+      views: Number(blog?.views ?? 0),
+      liked: Boolean(blog?.liked),
+    };
+  }
+
+  normalizeBlogs(blogs: any[]) {
+    return (Array.isArray(blogs) ? blogs : []).map((blog) => this.normalizeBlog(blog));
+  }
+
   getBlogs() {
 
     return this.http.get(

@@ -27,11 +27,7 @@ export class BlogList implements OnInit {
 
       next: (res: any) => {
 
-        console.log("Response:", res);
-
-        this.blogs = [...res];
-
-        console.log("Blogs:", this.blogs);
+        this.blogs = this.blogService.normalizeBlogs(res);
 
         this.cdr.detectChanges();
 
